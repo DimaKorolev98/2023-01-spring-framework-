@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "application",
+      "type": "ru.otus.homework.config.AppConfig",
+      "sourceType": "ru.otus.homework.config.AppConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "application.data-path",
+      "type": "java.lang.String",
+      "sourceType": "ru.otus.homework.config.AppConfig"
+    },
+    {
+      "name": "application.locale",
+      "type": "java.util.Locale",
+      "sourceType": "ru.otus.homework.config.AppConfig"
+    }
+  ],
+  "hints": []
+}

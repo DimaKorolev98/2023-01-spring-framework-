@@ -44,7 +44,7 @@ public class DataReaderImpl implements DataReader {
 
             reader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Ошибка чтения файла");
         }
         return questionsDataList;
     }

@@ -20,12 +20,12 @@ public class ExamProducerImpl implements ExamProducer {
 
     private final DataReader dataReader;
     private final MessageSource messageSource;
-    private Locale locale;
+    private AppConfig appConfig;
 
     public ExamProducerImpl(DataReader dataReader, MessageSource messageSource, AppConfig appConfig) {
         this.dataReader = dataReader;
         this.messageSource = messageSource;
-        this.locale = appConfig.getLocale();
+        this.appConfig = appConfig;
     }
     @Override
     public List<Question> getQuestion() {
@@ -43,7 +43,7 @@ public class ExamProducerImpl implements ExamProducer {
 
     private Question parseQuestionsString(String examCode){
         var question = new Question();
-        String line = messageSource.getMessage(examCode, null, null, locale);
+        String line = messageSource.getMessage(examCode, null, null, appConfig.getLocale());
         var scanner = new Scanner(line);
 
         int index = 0 ;

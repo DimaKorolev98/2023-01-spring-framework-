@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import ru.otus.homework.config.AppConfig;
 import ru.otus.homework.dao.ExamProducer;
 import ru.otus.homework.domain.Question;
-import ru.otus.homework.service.ExamContentPrinter;
 import ru.otus.homework.service.ExamSystemService;
 
 import java.util.ArrayList;
@@ -17,20 +16,18 @@ import java.util.Random;
 @Component("examSystemService")
 public class ExamSystemServiceImpl implements ExamSystemService {
     private final ExamProducer reader;
-    private final ExamContentPrinter printer;
     private final MessageSource messageSource;
     private static final int GEN_SIZE = 100;
-    private final Locale locale;
+    private final AppConfig appConfig;
 
 
     @Autowired
-    public ExamSystemServiceImpl(final ExamProducer reader, final ExamContentPrinter printer, MessageSource messageSource,
-                                 AppConfig configuration
+    public ExamSystemServiceImpl(final ExamProducer reader, MessageSource messageSource,
+                                 AppConfig appConfig
     ) {
         this.reader = reader;
-        this.printer = printer;
         this.messageSource = messageSource;
-        this.locale = configuration.getLocale();
+        this.appConfig = appConfig;
     }
 
     @Override
@@ -51,8 +48,8 @@ public class ExamSystemServiceImpl implements ExamSystemService {
 
     @Override
     public String formatExamCase(Question question) {
-        final String[] answers = { "" };
-        final int[] i = { 1 };
+        final String[] answers = {""};
+        final int[] i = {1};
         question.getAnswers().forEach(a -> answers[0] = String.format("%s\r\n%d. %s", answers[0], i[0]++, a));
         return question.getQuestion() + answers[0];
     }

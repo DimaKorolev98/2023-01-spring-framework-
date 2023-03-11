@@ -12,16 +12,16 @@ import java.util.Scanner;
 public class UIServiceImpl implements UIService {
 
     private final MessageSource messageSource;
-    private final Locale locale;
+    private final AppConfig appConfiguration;
 
     public UIServiceImpl(MessageSource messageSource, AppConfig appConfiguration) {
         this.messageSource = messageSource;
-        locale = appConfiguration.getLocale();
+        this.appConfiguration = appConfiguration;
     }
 
     @Override
     public String input(String greeting) {
-        var localeMsg = messageSource.getMessage(greeting, null, greeting, locale);
+        var localeMsg = messageSource.getMessage(greeting, null, greeting, appConfiguration.getLocale());
 
         Scanner scan = new Scanner(System.in);
         System.out.println(localeMsg);
