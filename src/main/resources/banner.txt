@@ -1,4 +1,4 @@
-
+${AnsiBackground.AnsiBackground.BRIGHT_RED}
          _
          /' `\                                 /'
        /'   ._)                              /'
@@ -6,3 +6,4 @@
            )      /'     /'    )     )   /'    )    /'    )
          /'     /'     /'    /'    /'  /'    /'   /'    /'
 (_____,/'      (__   /'    /'    /(__ (___,/(__  (___,/(__
+${AnsiBackground.DEFAULT}
