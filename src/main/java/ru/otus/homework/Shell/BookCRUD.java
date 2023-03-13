@@ -40,4 +40,9 @@ public class BookCRUD {
     public void deleteBook(String title) {
         bookDao.delete(bookDao.findByName(title));
     }
+    @ShellMethod
+    @Transactional
+    public void findBook(String title) {
+        System.out.println(bookDao.findByName(title));
+    }
 }
