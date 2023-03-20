@@ -22,7 +22,7 @@ public class Author {
     @Column(name = "name",unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "author",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Book> books;
 
     public Author(String name){
@@ -32,7 +32,7 @@ public class Author {
 
     @Override
     public String toString() {
-        return id + " " + name + "\n";
+        return id + " " + name + ". Количество книг: " + books.size() + "\n";
     }
 
 }

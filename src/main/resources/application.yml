@@ -28,5 +28,6 @@ spring:
           validation:
             mode: none
       hibernate:
+        enable_lazy_load_no_trans: true
         dialect: org.hibernate.dialect.H2Dialect
         ddl-auto: create-drop

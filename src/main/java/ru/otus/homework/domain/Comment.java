@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "comments")
+@Table(name ="comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,16 +19,13 @@ public class Comment {
     @Column(name = "text")
     private String text;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
 
-    public String toStringWithBook() {
-        return "[" + id + "]" + " " + text + "." + " Книга: " + book.getTitle();
-    }
 
     @Override
     public String toString() {
-        return "[" + id + "]" + " " + text + ".";
+        return "[" + id + "]"+ " " +text + ".";
     }
 }
