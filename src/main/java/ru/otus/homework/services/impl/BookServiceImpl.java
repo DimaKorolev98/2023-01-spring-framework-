@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import ru.otus.homework.domain.Author;
 import ru.otus.homework.domain.Genre;
+import ru.otus.homework.repositories.AuthorRepository;
 import ru.otus.homework.repositories.BookRepository;
 import ru.otus.homework.services.AuthorService;
 import ru.otus.homework.services.BookService;
@@ -18,38 +19,37 @@ import java.util.List;
 @Service("bookService")
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-    private final AuthorService authorDao;
+    private final AuthorRepository authorDao;
     private final GenreService genreDao;
     SessionFactory sessionFactory;
 
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorService authorDao, GenreService genreDao) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorDao, GenreService genreDao) {
         this.bookRepository = bookRepository;
         this.authorDao = authorDao;
         this.genreDao = genreDao;
 
     }
 
-    @Transactional
+
     @Override
     public Book save(Book book) {
         return bookRepository.save(book);
     }
 
 
-    @Transactional
+
     @Override
     public void delete(Book book) {
         bookRepository.delete(book);
     }
 
-    @Transactional
+
     @Override
     public List<Book> findAll() {
         return Lists.newArrayList(bookRepository.findAll());
     }
 
-    @Transactional
     @Override
     public Book findByTitle(String title) {
         return bookRepository.findByTitle(title);

@@ -6,6 +6,7 @@ import ru.otus.homework.domain.Author;
 
 
 public interface AuthorRepository extends CrudRepository<Author, Long> {
+
     Author deleteById(long id);
     Author findByName(String authorName);
 }

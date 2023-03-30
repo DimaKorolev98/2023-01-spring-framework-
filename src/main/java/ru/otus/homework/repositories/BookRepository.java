@@ -7,5 +7,4 @@ import ru.otus.homework.domain.Book;
 
 public interface BookRepository extends CrudRepository<Book, Long> {
     Book findByTitle(String title);
-    Book deleteByTitle(String title);
 }

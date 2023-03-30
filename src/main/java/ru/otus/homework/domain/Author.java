@@ -22,7 +22,7 @@ public class Author {
     @Column(name = "name",unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "author",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author",fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Book> books;
 
     public Author(String name){
