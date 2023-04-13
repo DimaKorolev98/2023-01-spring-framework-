@@ -1,12 +1,10 @@
 package ru.otus.homework.repositories;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import ru.otus.homework.domain.Author;
 
 
-public interface AuthorRepository extends CrudRepository<Author, Long> {
-
-    Author deleteById(long id);
-    Author findByName(String authorName);
+public interface AuthorRepository extends MongoRepository<Author, String> {
+    Author findByName(String name);
+    void deleteById(String id);
 }

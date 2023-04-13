@@ -1,45 +1,41 @@
 package ru.otus.homework.Shell;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.homework.services.AuthorService;
-import ru.otus.homework.services.BookService;
-import ru.otus.homework.services.CommentService;
-import ru.otus.homework.services.GenreService;
-import ru.otus.homework.domain.Author;
 import ru.otus.homework.domain.Book;
 import ru.otus.homework.domain.Comment;
-import ru.otus.homework.domain.Genre;
-import ru.otus.homework.services.impl.BookServiceImpl;
+import ru.otus.homework.repositories.CommentRepository;
+import ru.otus.homework.services.BookService;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @ShellComponent
 public class BookCRUD {
-    private final BookService bookDao;
+    private final BookService bookService;
 
-    public BookCRUD(BookService bookDao) {
-        this.bookDao = bookDao;
-
+    public BookCRUD(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @ShellMethod
-    public void findAll() {
-        System.out.println(bookDao.findAll());
+    public void findAllBooks() {
+        System.out.println(bookService.findAll().toString());
     }
 
     @ShellMethod
     public void addBook(String title, String authorName, String genreName) {
-        bookDao.addBook(title, authorName, genreName);
+        bookService.addBook(title, authorName, genreName);
     }
 
     @ShellMethod
     public void deleteBook(String title) {
-        bookDao.delete(bookDao.findByTitle(title));
+        bookService.deleteById(title);
     }
+
     @ShellMethod
     public void findBook(String title) {
-        System.out.println(bookDao.findByTitle(title));
+       System.out.println(bookService.toStringWithComments(bookService.findBookByTitle(title))); ;
     }
 }

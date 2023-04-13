@@ -1,60 +1,59 @@
 package ru.otus.homework.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
-@Entity
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
-@Table(name = "books")
-
+@NoArgsConstructor
+@Document(collection = "books")
 public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
-    private Long id;
 
-    @Column(name = "title")
+    @Id
+    private String id;
+
     private String title;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id")
+    @DBRef(lazy = true)
     private Author author;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "genre_id")
+    @DBRef(lazy = true)
     private Genre genre;
 
-    @OneToMany(mappedBy = "book",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @DBRef(lazy = true)
     private List<Comment> comments;
+
     public Book(String title) {
         this.title = title;
     }
 
 
+
+
+    public Book(String title, Author author, Genre genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
+
     @Override
     public String toString() {
-        return id +
-                " Наименование: " + title +
-                ". Автор: " + author.getName()
-                +
-                ". Жанр: " + genre.getName()
-                + ". Коментарии:" + comments.toString()
-                + "\n";
+        return "Book{" +
+                "id='" + id + '\'' +
+                ", Название: '" + title + '\'' +
+                ", Автор: " + author.getName() +
+                ", Жанр: " + genre.getName() +
+                ", Коментарии: " + (comments != null ? comments: "Нет Комментариев" )+
+                '}';
     }
-
-    public String toStringWithCommentsCount() {
-        return id +
-                " Наименование: " + title +
-                ". Автор: " + author.getName() +
-                ". Жанр: " + genre.getName()
-                + "\n";
-    }
-
 }

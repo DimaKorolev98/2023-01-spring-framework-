@@ -5,7 +5,7 @@ import ru.otus.homework.repositories.AuthorRepository;
 import ru.otus.homework.services.AuthorService;
 import ru.otus.homework.domain.Author;
 
-import javax.transaction.Transactional;
+
 import java.util.List;
 
 import static org.hibernate.validator.internal.util.CollectionHelper.newArrayList;
@@ -20,26 +20,22 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author findByName(String authorName) {
-
-        return authorRepository.findByName(authorName);
-    }
-
-
-    @Override
-    public Author save(Author author) {
-        return authorRepository.save(author);
-    }
-
-
-    @Override
-    public void delete(Author author) {
-        authorRepository.delete(author);
-    }
-
-
-    @Override
     public List<Author> findAll() {
         return newArrayList(authorRepository.findAll());
+    }
+
+    @Override
+    public Author findByName(String name) {
+        return authorRepository.findByName(name);
+    }
+
+    @Override
+    public void deleteById(String name) {
+    authorRepository.deleteById(findByName(name).getId());
+    }
+
+    @Override
+    public Author addAuthor(String name) {
+      return authorRepository.save(new Author(name));
     }
 }

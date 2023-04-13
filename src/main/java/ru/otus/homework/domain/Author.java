@@ -1,38 +1,38 @@
 package ru.otus.homework.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name ="authors")
+@Data
+@Document(collection = "authors")
 public class Author {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "name",unique = true)
+   @Id
+    private String id;
     private String name;
+    private List<String> books;
 
-    @OneToMany(mappedBy = "author",fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    private List<Book> books;
 
-    public Author(String name){
+    public Author(String name) {
         this.name = name;
     }
 
 
+
     @Override
     public String toString() {
-        return id + " " + name + ". Количество книг: " + books.size() + "\n";
+        return "Author{" +
+                "id:'" + id + '\'' +
+                ", Имя:'" + name + '\'' +
+                '}';
     }
-
 }

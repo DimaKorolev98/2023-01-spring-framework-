@@ -1,18 +1,15 @@
 package ru.otus.homework.services.impl;
 
-import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Service;
+import ru.otus.homework.domain.Genre;
 import ru.otus.homework.repositories.GenreRepository;
 import ru.otus.homework.services.GenreService;
-import ru.otus.homework.domain.Genre;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("genreService")
 public class GenreServiceImpl implements GenreService {
-
-
     private final GenreRepository genreRepository;
 
     public GenreServiceImpl(GenreRepository genreRepository) {
@@ -20,25 +17,22 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre save(Genre genre) {
-        return genreRepository.save(genre);
-    }
-
-
-    @Override
-    public void delete(Genre genre) {
-        genreRepository.delete(genre);
-    }
-
-
-    @Override
     public List<Genre> findAll() {
-        return Lists.newArrayList(genreRepository.findAll());
+        return new ArrayList<Genre>(genreRepository.findAll());
     }
 
+    @Override
+    public void deleteById(String name) {
+    genreRepository.deleteById(genreRepository.findByName(name).getId());
+    }
 
     @Override
-    public Genre findByName(String genreName) {
-        return genreRepository.findByName(genreName);
+    public Genre addGenre(String name) {
+        return genreRepository.save(new Genre(name));
+    }
+
+    @Override
+    public Genre findByName(String name) {
+        return genreRepository.findByName(name);
     }
 }

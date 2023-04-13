@@ -1,10 +1,14 @@
 package ru.otus.homework.repositories;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import ru.otus.homework.domain.Book;
 
+import java.util.List;
 
-public interface BookRepository extends CrudRepository<Book, Long> {
+
+public interface BookRepository extends MongoRepository<Book, String> {
+    List<Book> findAll();
     Book findByTitle(String title);
+
+
 }

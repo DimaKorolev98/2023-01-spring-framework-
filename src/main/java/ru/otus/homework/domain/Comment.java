@@ -1,28 +1,29 @@
 package ru.otus.homework.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name ="comments")
+@Getter
+@Setter
+@RequiredArgsConstructor
+@Document(collection = "comments")
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(name = "text")
+    @Id
+    private String id;
+
     private String text;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "book_id")
-    private Book book;
+    public Comment(String text, String bookId) {
+        this.text = text;
+    }
 
+    public Comment(String text) {
+        this.text = text;
+    }
 
     @Override
     public String toString() {
