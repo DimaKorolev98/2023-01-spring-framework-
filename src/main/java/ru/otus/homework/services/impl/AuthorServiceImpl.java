@@ -1,5 +1,6 @@
 package ru.otus.homework.services.impl;
 
+import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Service;
 import ru.otus.homework.repositories.AuthorRepository;
 import ru.otus.homework.services.AuthorService;
@@ -8,7 +9,7 @@ import ru.otus.homework.domain.Author;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static org.hibernate.validator.internal.util.CollectionHelper.newArrayList;
+
 
 @Service("authorService")
 public class AuthorServiceImpl implements AuthorService {
@@ -40,6 +41,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<Author> findAll() {
-        return newArrayList(authorRepository.findAll());
+        return Lists.newArrayList(authorRepository.findAll());
     }
 }

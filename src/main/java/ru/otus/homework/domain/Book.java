@@ -3,21 +3,18 @@ package ru.otus.homework.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "books")
-
+@RequiredArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Long id;
 
     @Column(name = "title")
@@ -37,6 +34,10 @@ public class Book {
         this.title = title;
     }
 
+    public Book(long id, String title){
+        this.id = id;
+        this.title = title;
+    }
 
     @Override
     public String toString() {

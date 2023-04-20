@@ -4,15 +4,15 @@ package ru.otus.homework.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name ="authors")
+@RequiredArgsConstructor
 public class Author {
 
     @Id
@@ -28,6 +28,7 @@ public class Author {
     public Author(String name){
         this.name = name;
     }
+
 
 
     @Override

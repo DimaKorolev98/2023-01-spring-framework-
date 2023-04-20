@@ -1,7 +1,6 @@
 package ru.otus.homework.services.impl;
 
 import org.assertj.core.util.Lists;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,12 +8,12 @@ import ru.otus.homework.domain.Author;
 import ru.otus.homework.domain.Genre;
 import ru.otus.homework.repositories.AuthorRepository;
 import ru.otus.homework.repositories.BookRepository;
-import ru.otus.homework.services.AuthorService;
 import ru.otus.homework.services.BookService;
 import ru.otus.homework.domain.Book;
 import ru.otus.homework.services.GenreService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("bookService")
 public class BookServiceImpl implements BookService {
@@ -55,9 +54,9 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findByTitle(title);
     }
 
+
 @Transactional
-    public void addBook(String title, String authorName, String genreName) {
-        Book book = new Book();
+    public void addBook(Book book, String title, String authorName, String genreName) {
         book.setTitle(title);
         var author = authorDao.findByName(authorName);
         if (author == null) {
