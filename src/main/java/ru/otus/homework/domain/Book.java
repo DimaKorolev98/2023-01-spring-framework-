@@ -43,10 +43,10 @@ public class Book {
     public String toString() {
         return id +
                 " Наименование: " + title +
-                ". Автор: " + author.getName()
+                ". Автор: " + (author!=null ? author.getName() : "Нет Автора")
                 +
-                ". Жанр: " + genre.getName()
-                + ". Коментарии:" + comments.toString()
+                ". Жанр: " + (genre!=null ? genre.getName() : "Нет жанра")
+                + ". Коментарии:" + (comments !=null ? comments.toString():"Нет комментариев")
                 + "\n";
     }
 

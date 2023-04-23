@@ -24,11 +24,13 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
+@RunWith(SpringRunner.class)
 @WebMvcTest(controllers = BookController.class)
 //@RequiredArgsConstructor
 class BookControllerTest {
@@ -79,5 +81,27 @@ class BookControllerTest {
         mvc.perform(post("/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    public void saveBook() throws Exception {
+        mvc.perform(get("/add"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("add"))
+                .andExpect(model().attributeExists("book"));
+    }
+
+    @Test
+    public void deleteBook() throws Exception {
+        Book book = new Book();
+        book.setId(1L);
+        Mockito.when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
+
+        mvc.perform(get("/delete?id=1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("delete_book"))
+                .andExpect(model().attributeExists("book"));
+
+        Mockito.verify(bookRepository, Mockito.times(1)).findById(1L);
     }
 }
