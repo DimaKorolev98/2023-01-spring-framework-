@@ -8,6 +8,7 @@ import ru.otus.homework.domain.Author;
 import ru.otus.homework.domain.Genre;
 import ru.otus.homework.repositories.AuthorRepository;
 import ru.otus.homework.repositories.BookRepository;
+import ru.otus.homework.rest.dto.BookDto;
 import ru.otus.homework.services.BookService;
 import ru.otus.homework.domain.Book;
 import ru.otus.homework.services.GenreService;
@@ -54,23 +55,22 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findByTitle(title);
     }
 
-
 @Transactional
-    public void addBook(Book book, String title, String authorName, String genreName) {
-        book.setTitle(title);
-        var author = authorDao.findByName(authorName);
+    public Book saveBook(BookDto bookDto) {
+        Book book = new Book();
+        book.setTitle(bookDto.getTitle());
+        var author = authorDao.findByName(bookDto.getAuthor());
         if (author == null) {
-            author = authorDao.save(new Author(authorName));
+            author = authorDao.save(new Author(bookDto.getAuthor()));
         }
         book.setAuthor(author);
 
-        var genre = genreDao.findByName(genreName);
+        var genre = genreDao.findByName(bookDto.getGenre());
         if (genre == null) {
-            genre = genreDao.save(new Genre(genreName));
+            genre = genreDao.save(new Genre(bookDto.getGenre()));
         }
         book.setGenre(genre);
-
-        bookRepository.save(book);
+        return book;
     }
 }
 

@@ -1,5 +1,6 @@
 package ru.otus.homework.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 @Table(name = "books")
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +24,12 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
+    @JsonManagedReference
     private Author author;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genre_id")
+    @JsonManagedReference
     private Genre genre;
 
     @OneToMany(mappedBy = "book",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -38,6 +42,15 @@ public class Book {
         this.id = id;
         this.title = title;
     }
+
+    public Book(String title, Author author, Genre genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
+
+
 
     @Override
     public String toString() {

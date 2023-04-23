@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Add book</title>
+    <title>Edit person</title>
     <style type="text/css">
         body {
             padding: 50px;
@@ -21,35 +21,50 @@
             margin-top: 10px;
         }
     </style>
+    <script>
+        function saveBook() {
+            const savedBookContainer = document.getElementById("saved-book")
+            const titleInput = document.getElementById("book-title-input")
+            const authorNameInput = document.getElementById("author-name-input")
+            const genreNameInput = document.getElementById("genre-name-input")
+            const book = { title: titleInput.value}
+            fetch("api/books", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(book)})
+                .then(rawResponse => rawResponse.json())
+                .then(json => savedBookContainer.innerHTML = JSON.stringify(json, null, 4))
+        }
+    </script>
 </head>
 <body>
 
-<!-- Book adding -->
-<form id="add-form" action="add.html" th:method="post" th:object="${book}" th:action="@{/add/new}">
-
-    <h3>Book:</h3>
-
+<h3>Form for new person creation:</h3>
+<form id="edit-form" action="add.html" th:method="post" th:action="@{/api/books}">
     <div class="row">
         <label for="book-title-input">Title:</label>
-        <input id="book-title-input" name="title" type="text" th:value="*{title}"/>
+        <input id="book-title-input" name="title" type="text" />
+    </div>
+    <div class="row">
+        <label for="author-name-input">Author:</label>
+        <input id="author-name-input" name="author" type="text"/>
+    </div>
+    <div class="row">
+        <label for="genre-name-input">Genre:</label>
+        <input id="genre-name-input" th:name="genre" type="text"/>
     </div>
 
     <div class="row">
-        <label for="book-author-input">Author:</label>
-        <input id="book-author-input" name="authorName" type="text"/>
-    </div>
-
-    <div class="row">
-        <label for="book-genre-input">Genre:</label>
-        <input id="book-genre-input" name="genreName" type="text"/>
-    </div>
-
-
-    <div class="row">
-        <button type="submit">Save</button>
-        <a href="list.html" th:href="@{/}"><button type="button">Cancel</button></a>
+        <button type="button" onclick="saveBook()" >Save</button>
+        <a href="list.html" th:href="@{/}"><button type="button">Go Back</button></a>
     </div>
 </form>
+
+<h3>Saved book:</h3>
+<pre id = "saved-book"></pre>
 
 </body>
 </html>

@@ -19,7 +19,7 @@ import ru.otus.homework.services.GenreService;
 import java.util.List;
 @Controller
 @RequiredArgsConstructor
-public class BookController {
+public class BookPageController {
 
     private final BookRepository bookRepository;
     private final BookService bookService;
@@ -27,9 +27,7 @@ public class BookController {
     private final GenreService genreService;
 
     @GetMapping("/")
-    public String listPage(Model model) {
-        List<Book> books = bookRepository.findAll();
-        model.addAttribute("books", books);
+    public String listPage() {
         return "list";
     }
 
@@ -49,16 +47,10 @@ public class BookController {
     }
 
     @GetMapping("/add")
-    public String addPage(Model model) {
-        model.addAttribute("book", new Book());
+    public String addPage() {
         return "add";
     }
 
-    @PostMapping("/add/new")
-    public String saveBook(Book book, String title, String authorName, String genreName) {
-        bookService.addBook(book, title, authorName, genreName);
-        return "redirect:/";
-    }
 
     @GetMapping("/delete")
     public String deleteBook(@RequestParam("id") long id, Model model){
