@@ -1,62 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
-    <title>List of all books</title>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style type="text/css">
         body {
             padding: 50px;
         }
 
-        .books {
-            border: 1px solid steelblue;
-            width: 300px;
-            border-collapse: collapse;
+        label {
+            display: inline-block;
+            width: 100px;
         }
 
-        .books tr td, th {
-            padding: 5px;
-            border: 1px solid steelblue;
+        input:read-only {
+            background: lightgray;
         }
 
-        .books td:last-child, td:first-child {
-            width: 50px;
+        .row {
+            margin-top: 10px;
         }
     </style>
-    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
 </head>
+
 <body>
-<h3>Books:</h3>
+<div class="container">
+    <h1>Books</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-<table class="books">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Author</th>
-        <th>Genre</th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+<!-- Modal for editing book -->
+<div class="modal fade" id="bookModal" tabindex="10" role="dialog" aria-labelledby="bookModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+            </form>
+        </div>
+    </div>
+</div>
 
-<script>
-    $(function () {
-        $.get('/api/books').done(function (books) {
-            books.forEach(function (book) {
-                $('tbody').append(`
-                    <tr>
-                        <td>${book.id}</td>
-                        <td>${book.title}</td>
-                        <td>${book.author}</td>
-                        <td>${book.genre}</td>
-                    </tr>
-                `)
-            });
-        })
-    });
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/book.js}"></script>
 <div class = "row"><a href="add.html" th:href="@{/add}"><button type="button">Add</button></a></div>
 </body>
+
 </html>

@@ -38,7 +38,6 @@ public class BookServiceImpl implements BookService {
     }
 
 
-
     @Override
     public void delete(Book book) {
         bookRepository.delete(book);
@@ -55,21 +54,24 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findByTitle(title);
     }
 
-@Transactional
+    @Transactional
     public Book saveBook(BookDto bookDto) {
         Book book = new Book();
+        book.setId(bookDto.getId());
         book.setTitle(bookDto.getTitle());
-        var author = authorDao.findByName(bookDto.getAuthor());
+        var author = authorDao.findByName(bookDto.getAuthor().getName());
         if (author == null) {
-            author = authorDao.save(new Author(bookDto.getAuthor()));
+            author = authorDao.save(new Author(bookDto.getAuthor().getName()));
         }
         book.setAuthor(author);
 
-        var genre = genreDao.findByName(bookDto.getGenre());
+        var genre = genreDao.findByName(bookDto.getGenre().getName());
         if (genre == null) {
-            genre = genreDao.save(new Genre(bookDto.getGenre()));
+            genre = genreDao.save(new Genre(bookDto.getGenre().getName()
+            ));
         }
         book.setGenre(genre);
+        bookRepository.save(book);
         return book;
     }
 }

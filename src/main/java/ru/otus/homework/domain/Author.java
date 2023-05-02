@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name ="authors")
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class Author {
 
@@ -33,7 +34,7 @@ public class Author {
 
     @Override
     public String toString() {
-        return id + " " + name + ". Количество книг: " + books.size() + "\n";
+        return id + " " + (name!= null? name : "Нет Имени") + ". Количество книг: " + (books != null ? books.size() : "Нет книг") +"\n";
     }
 
 }

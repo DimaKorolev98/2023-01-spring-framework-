@@ -1,10 +1,7 @@
 package ru.otus.homework.rest;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.otus.homework.repositories.BookRepository;
 import ru.otus.homework.rest.dto.BookDto;
 import ru.otus.homework.services.BookService;
@@ -30,4 +27,14 @@ public class BookController {
         var savedBook = service.saveBook(bookDto);
         return BookDto.toDto(savedBook);
     }
+
+    @GetMapping("/api/book")
+    public BookDto getBook(@RequestParam("id") long id){
+        return BookDto.toDto(repository.findById(id).orElseThrow(NullPointerException::new));
     }
+
+    @PostMapping("/api/book")
+    public void deleteBook(@RequestParam("id") long id){
+       repository.deleteById(id);
+    }
+}
