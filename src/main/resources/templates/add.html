@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Edit book</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+    </style>
+    <script type="text/javascript" th:src="@{/book.js}"></script>
+</head>
+<body>
+
+<h3>Form for new person creation:</h3>
+<form id="add-form" action="add.html" th:method="post">
+    <div class="row">
+        <label for="book-title-input">Title:</label>
+        <input id="book-title-input" name="title" type="text" />
+    </div>
+    <div class="row">
+        <label for="author-name-input">Author:</label>
+        <input id="author-name-input" name="author" type="text"/>
+    </div>
+    <div class="row">
+        <label for="genre-name-input">Genre:</label>
+        <input id="genre-name-input" th:name="genre" type="text"/>
+    </div>
+
+    <div class="row">
+        <button type="button" onclick="saveBook()">Save</button>
+        <a href="list.html" th:href="@{/}"><button type="button">Go Back</button></a>
+    </div>
+</form>
+
+<h3>Saved book:</h3>
+<pre id = "saved-book"></pre>
+<script type="text/javascript" th:src="@{/book.js}"></script>
+</body>
+</html>
