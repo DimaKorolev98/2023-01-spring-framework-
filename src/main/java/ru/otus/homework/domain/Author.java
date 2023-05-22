@@ -19,7 +19,6 @@ public class Author {
    @Id
     private String id;
     private String name;
-    private List<String> books;
 
 
     public Author(String name) {

@@ -23,13 +23,12 @@ public class Book {
 
     private String title;
 
-    @DBRef(lazy = true)
+    @DBRef
     private Author author;
-
-    @DBRef(lazy = true)
+    @DBRef
     private Genre genre;
 
-    @DBRef(lazy = true)
+    @DBRef
     private List<Comment> comments;
 
     public Book(String title) {
@@ -44,6 +43,14 @@ public class Book {
         this.author = author;
         this.genre = genre;
     }
+    public Book(String id, String title, Author author, Genre genre) {
+        this.id= id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
+
 
 
     @Override

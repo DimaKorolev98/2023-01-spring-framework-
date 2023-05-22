@@ -10,7 +10,7 @@ banner:
 
 logging:
   level:
-    org.springframework: ERROR
+    org.springframework: INFO
 
 mongock:
   runner-type: "InitializingBean"

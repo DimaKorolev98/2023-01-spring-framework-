@@ -11,17 +11,18 @@ function getBooks() {
             <td>${book.title}</td>
             <td>${book.author.name}</td>
             <td>${book.genre.name}</td>
-            <td><button type="button" class="btn btn-primary" onclick="getBook(${book.id})">Edit</button></td>
-            <td><button type="button" onclick="deleteBook(${book.id})">Delete</button></td>
+            <td><button type="button" class="btn btn-primary" onclick="getBook('${book.id}')">Edit</button></td>
+            <td><button type="button" onclick="deleteBook('${book.id}')">Delete</button></td>
           </tr>
         `)
         });
     });
 }
+
 function deleteBook(id) {
-    $.post('/api/book?id=' + id).done( function (){
+    $.post('/api/book?id=' + id).done(function () {
         location.reload();
-    })
+    });
 }
 
 function getBook(id) {
@@ -46,28 +47,25 @@ function getBook(id) {
             <select name="genre" class="form-control" id="genre-name-input" multiple="multiple"></select>
           </div>
           <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="editBook()">Save changes</button>
-                </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="editBook()">Save changes</button>
+          </div>
         `);
 
         $.get('/api/authors').done(function (authors) {
             var options = '';
             for (var i = 0; i < authors.length; i++) {
-                options += `<option
-                                value="${authors[i].name}">
-                                ${authors[i].name}
-                                </option>`;
+                options += `<option value='{"id":"${authors[i].id}", "name":"${authors[i].name}"}' ${authors[i].id === book.author.id ? "selected" : ""}>${authors[i].name}</option>`;
             }
-            $('#author-name-input').html(options).val(book.author.name);
+            $('#author-name-input').html(options);
         });
 
         $.get('/api/genres').done(function (genres) {
             var options = '';
             for (var i = 0; i < genres.length; i++) {
-                options += `<option value="${genres[i].name}">${genres[i].name}</option>`;
+                options += `<option value='{"id":"${genres[i].id}", "name":"${genres[i].name}"}' ${genres[i].id === book.genre.id ? "selected" : ""}>${genres[i].name}</option>`;
             }
-            $('#genre-name-input').html(options).val(book.genre.name);
+            $('#genre-name-input').html(options);
         });
 
     });
@@ -81,30 +79,41 @@ function editBook() {
     const titleInput = document.getElementById("book-title-input")
     const authorNameInput = document.getElementById("author-name-input")
     const genreNameInput = document.getElementById("genre-name-input")
-    const book = {id: idInput.value, title: titleInput.value, author: {name: authorNameInput.value}, genre: {name: genreNameInput.value}}
+    const book = {
+        id: idInput.value,
+        title: titleInput.value,
+        author: JSON.parse(authorNameInput.value),
+        genre: JSON.parse(genreNameInput.value)
+    }
     fetch("/api/books", {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(book)})
+        body: JSON.stringify(book)
+    })
         .then(rawResponse => rawResponse.json())
-    location.reload();
+        .then(response => {
+            console.log("Book updated successfully:", response);
+            location.reload();
+        })
+        .catch(error => console.error(error));
 }
+
 function saveBook() {
     const savedBookContainer = document.getElementById("saved-book")
     const titleInput = document.getElementById("book-title-input")
     const authorNameInput = document.getElementById("author-name-input")
     const genreNameInput = document.getElementById("genre-name-input")
-    const book = {title: titleInput.value, author: {name: authorNameInput.value}, genre: {name: genreNameInput.value}}
+    const book = {title: titleInput.value, author: {id: "", name: authorNameInput.value}, genre: {id: "", name: genreNameInput.value}}
     fetch("/api/books", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(book)})
+        body: JSON.stringify(book)
+    })
         .then(rawResponse => rawResponse.json())
         .then(json => savedBookContainer.innerHTML = JSON.stringify(json, null, 4))
 }
