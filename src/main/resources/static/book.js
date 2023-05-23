@@ -105,7 +105,7 @@ function saveBook() {
     const titleInput = document.getElementById("book-title-input")
     const authorNameInput = document.getElementById("author-name-input")
     const genreNameInput = document.getElementById("genre-name-input")
-    const book = {title: titleInput.value, author: {id: "", name: authorNameInput.value}, genre: {id: "", name: genreNameInput.value}}
+    const book = {title: titleInput.value, author: {name: authorNameInput.value}, genre: {name: genreNameInput.value}}
     fetch("/api/books", {
         method: 'POST',
         headers: {

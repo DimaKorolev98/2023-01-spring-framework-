@@ -26,21 +26,33 @@ public class BookController {
                 .map(BookDto::toDto);
     }
 
+
     @PostMapping("/api/books")
     public Mono<BookDto> saveOrUpdate(@RequestBody BookDto bookDto) {
         return Mono.just(BookDto.toObject(bookDto))
-                .flatMap(book -> genreDao.findById(book.getGenre().getId())
-                        .switchIfEmpty(genreDao.save(new Genre(book.getGenre().getName())))
-                        .flatMap(genre -> {
-                            book.setGenre(genre);
-                            return authorDao.findByName(book.getAuthor().getId())
-                                    .switchIfEmpty(authorDao.save(new Author(book.getAuthor().getName())))
-                                    .map(author -> {
-                                        book.setAuthor(author);
-                                        return book;
-                                    });
-                        })
-                )
+                .flatMap(book -> {
+                    Mono<Genre> genreMono;
+                    if (book.getGenre().getId() == null) {
+                        genreMono = genreDao.findByName(book.getGenre().getName())
+                                .switchIfEmpty(genreDao.save(new Genre(book.getGenre().getName())));
+                    } else {
+                        genreMono = genreDao.findById(book.getGenre().getId());
+                    }
+                    return genreMono.flatMap(genre -> {
+                        book.setGenre(genre);
+                        Mono<Author> authorMono;
+                        if (book.getAuthor().getId() == null) {
+                            authorMono = authorDao.findByName(book.getAuthor().getName())
+                                    .switchIfEmpty(authorDao.save(new Author(book.getAuthor().getName())));
+                        } else {
+                            authorMono = authorDao.findById(book.getAuthor().getId());
+                        }
+                        return authorMono.map(author -> {
+                            book.setAuthor(author);
+                            return book;
+                        });
+                    });
+                })
                 .flatMap(repository::save)
                 .map(BookDto::toDto)
                 .onErrorMap(ex -> new RuntimeException("Failed to save or update Book", ex));
