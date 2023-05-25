@@ -29,6 +29,13 @@ create table books
     author_id long
 );
 
+CREATE TABLE users(
+                      id long PRIMARY KEY AUTO_INCREMENT,
+                      user_name VARCHAR (255) NOT NULL,
+                      email VARCHAR(255),
+                      password VARCHAR(255) NOT NULL
+);
+
 alter table books
     add constraint fk_bookGenre
         foreign key (genre_id) references genres(Id);

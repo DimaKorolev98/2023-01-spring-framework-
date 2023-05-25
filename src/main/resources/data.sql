@@ -31,4 +31,9 @@ values (4, 3, 'Чистый код', 4);
 
 insert into comments (id,text,book_id) values(1,'Хорошая книга',1);
 insert into comments (id,text,book_id) values(2,'Очень понравилось',1);
-insert into comments (id,text,book_id) values(3,'Можно и лучше',4)
+insert into comments (id,text,book_id) values(3,'Можно и лучше',4);
+
+
+INSERT INTO users(user_name, email, password)
+VALUES ('user', 'user@mail.ru', '$2a$12$X8P20S1rPnxHzFvdm1xsw.0FbfBMno1LoSYh/0U4/a8QEQ6uy5F2C');
+-- Пароль: superpas

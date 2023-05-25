@@ -90,7 +90,12 @@ function editBook() {
         },
         body: JSON.stringify(book)})
         .then(rawResponse => rawResponse.json())
-    location.reload();
+        .then(response => {
+            console.log("Book updated successfully:", response);
+            location.reload();
+        })
+        .catch(error => console.error(error));
+
 }
 function saveBook() {
     const savedBookContainer = document.getElementById("saved-book")
