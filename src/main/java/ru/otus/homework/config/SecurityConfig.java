@@ -26,11 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.ALWAYS )
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login", "/logout").permitAll()
-                .antMatchers("/**").authenticated()
+                .antMatchers("/","/api/books").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/book","/add").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .and()
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .permitAll();
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
