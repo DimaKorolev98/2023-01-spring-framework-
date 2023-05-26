@@ -34,6 +34,8 @@ insert into comments (id,text,book_id) values(2,'Очень понравилос
 insert into comments (id,text,book_id) values(3,'Можно и лучше',4);
 
 
-INSERT INTO users(user_name, email, password)
-VALUES ('user', 'user@mail.ru', '$2a$12$X8P20S1rPnxHzFvdm1xsw.0FbfBMno1LoSYh/0U4/a8QEQ6uy5F2C');
--- Пароль: superpas
+INSERT INTO users(user_name, email, password, role)
+VALUES ('user', 'user@mail.ru', '$2a$12$X8P20S1rPnxHzFvdm1xsw.0FbfBMno1LoSYh/0U4/a8QEQ6uy5F2C', 'ROLE_USER'),
+       ('admin', 'admin@mail.ru', '$2a$12$GdPiy5ySkXbfL07lDlGV.uWOtXNooKqvWKCsQCpt4Y8I9.1m5FaIi', 'ROLE_ADMIN');
+-- user, Пароль: superpas;
+-- admin, Пароль: adminpas;
