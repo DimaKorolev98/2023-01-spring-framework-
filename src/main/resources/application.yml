@@ -1,6 +1,20 @@
 spring:
+  batch:
+    job:
+      enabled: false
+  data:
+    mongodb:
+      database: library
+      host: localhost
+      port: 0
+  main:
+    allow-circular-references: true
+  mongodb:
+    embedded:
+      version: 3.4.0
   banner:
     location: banner.txt
+
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver

@@ -1,4 +1,4 @@
-package ru.otus.homework.domain;
+package ru.otus.homework.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
