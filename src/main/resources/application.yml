@@ -29,3 +29,13 @@ spring:
         enable_lazy_load_no_trans: true
         dialect: org.hibernate.dialect.H2Dialect
         ddl-auto: create-drop
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,logfile
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      enabled: true
