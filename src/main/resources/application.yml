@@ -39,3 +39,6 @@ management:
       show-details: always
     logfile:
       enabled: true
+logging:
+  file:
+    name: "logs/application.log"
