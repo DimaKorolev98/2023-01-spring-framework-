@@ -59,13 +59,13 @@ public class BookServiceImpl implements BookService {
         Book book = new Book();
         book.setId(bookDto.getId());
         book.setTitle(bookDto.getTitle());
-        var author = authorDao.findByName(bookDto.getAuthor().getName());
+        Author author = authorDao.findByName(bookDto.getAuthor().getName());
         if (author == null) {
             author = authorDao.save(new Author(bookDto.getAuthor().getName()));
         }
         book.setAuthor(author);
 
-        var genre = genreDao.findByName(bookDto.getGenre().getName());
+        Genre genre = genreDao.findByName(bookDto.getGenre().getName());
         if (genre == null) {
             genre = genreDao.save(new Genre(bookDto.getGenre().getName()
             ));

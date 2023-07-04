@@ -1,7 +1,9 @@
 package ru.otus.homework.rest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.springframework.web.bind.annotation.*;
+import ru.otus.homework.domain.Book;
 import ru.otus.homework.repositories.BookRepository;
 import ru.otus.homework.rest.dto.BookDto;
 import ru.otus.homework.services.BookService;
@@ -24,7 +26,7 @@ public class BookController {
 
     @PostMapping("/api/books")
     public BookDto saveBook(@RequestBody BookDto bookDto) {
-        var savedBook = service.saveBook(bookDto);
+       Book savedBook = service.saveBook(bookDto);
         return BookDto.toDto(savedBook);
     }
 
