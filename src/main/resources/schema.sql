@@ -1,51 +1,38 @@
-drop table if exists comments;
-create table comments
-(
-    id      long primary key auto_increment,
-    text    varchar(1000),
-    book_id long
+DROP TABLE IF EXISTS comments;
+CREATE TABLE comments (
+                          id      SERIAL PRIMARY KEY,
+                          text    VARCHAR(1000),
+                          book_id BIGINT
 );
 
-drop table if exists genres;
-create table genres
-(
-    id   long primary key auto_increment,
-    name varchar(255) unique
+DROP TABLE IF EXISTS genres;
+CREATE TABLE genres (
+                        id   SERIAL PRIMARY KEY,
+                        name VARCHAR(255) UNIQUE
 );
 
-drop table if exists authors;
-create table authors
-(
-    id   long PRIMARY KEY AUTO_INCREMENT,
-    name varchar(255) unique
+DROP TABLE IF EXISTS authors;
+CREATE TABLE authors (
+                         id   SERIAL PRIMARY KEY,
+                         name VARCHAR(255) UNIQUE
 );
 
-drop table if exists books;
-create table books
-(
-    id        long primary key auto_increment,
-    title     varchar(255),
-    genre_id  long,
-    author_id long
+DROP TABLE IF EXISTS books;
+CREATE TABLE books (
+                       id         BIGINT PRIMARY KEY,
+                       title      VARCHAR(255),
+                       genre_id   BIGINT,
+                       author_id  BIGINT
 );
 
-CREATE TABLE users
-(
-    id        long PRIMARY KEY AUTO_INCREMENT,
-    user_name VARCHAR(255) NOT NULL,
-    email     VARCHAR(255),
-    password  VARCHAR(255) NOT NULL,
-    role      VARCHAR(255)
+CREATE TABLE users (
+                       id        BIGINT PRIMARY KEY,
+                       user_name VARCHAR(255) NOT NULL,
+                       email     VARCHAR(255),
+                       password  VARCHAR(255) NOT NULL,
+                       role      VARCHAR(255)
 );
 
-alter table books
-    add constraint fk_bookGenre
-        foreign key (genre_id) references genres (Id);
-
-alter table books
-    add constraint fk_bookAuthor
-        foreign key (author_id) references authors (Id);
-
-alter table comments
-    add constraint fk_commentBook
-        foreign key (book_id) references books (Id) ON DELETE CASCADE;
+ALTER TABLE books ADD CONSTRAINT fk_bookGenre FOREIGN KEY (genre_id) REFERENCES genres (id);
+ALTER TABLE books ADD CONSTRAINT fk_bookAuthor FOREIGN KEY (author_id) REFERENCES authors (id);
+ALTER TABLE comments ADD CONSTRAINT fk_commentBook FOREIGN KEY (book_id) REFERENCES books (id) ON DELETE CASCADE;
