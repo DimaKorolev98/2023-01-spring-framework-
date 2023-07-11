@@ -20,7 +20,7 @@ public class BookController {
 
     @GetMapping("/api/books")
     public List<BookDto> getAllBooks() {
-        return repository.findAll().stream().map(BookDto::toDto)
+        return service.findAll().stream().map(BookDto::toDto)
                 .collect(Collectors.toList());
     }
 

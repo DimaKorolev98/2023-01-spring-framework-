@@ -19,7 +19,7 @@ spring:
             mode: none
       hibernate:
         enable_lazy_load_no_trans: true
-        dialect:  org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: create-drop
   sql:
     init:
@@ -28,7 +28,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,logfile
+        include: health,metrics,logfile,hystrix.stream
   endpoint:
     health:
       show-details: always

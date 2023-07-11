@@ -30,7 +30,10 @@ public class Author {
         this.name = name;
     }
 
-
+    public Author(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Override
     public String toString() {
