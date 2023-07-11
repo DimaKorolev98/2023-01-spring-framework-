@@ -1,5 +1,8 @@
 package ru.otus.homework.services.impl;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.assertj.core.util.Lists;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
@@ -14,7 +17,6 @@ import ru.otus.homework.domain.Book;
 import ru.otus.homework.services.GenreService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service("bookService")
 public class BookServiceImpl implements BookService {
@@ -43,9 +45,17 @@ public class BookServiceImpl implements BookService {
         bookRepository.delete(book);
     }
 
-
+    @HystrixCommand(commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")},
+            fallbackMethod = "getEmptyBook")
     @Override
     public List<Book> findAll() {
+        //Для проверки
+//        try {
+//            Thread.sleep(7000);
+//        }catch (Exception ignored){
+//
+//        }
         return Lists.newArrayList(bookRepository.findAll());
     }
 
@@ -73,6 +83,9 @@ public class BookServiceImpl implements BookService {
         book.setGenre(genre);
         bookRepository.save(book);
         return book;
+    }
+    public List<Book> getEmptyBook() {
+        return Lists.newArrayList(new Book(0L, "NA", new Author(0L, "NA"), new Genre(0L, "NA")));
     }
 }
 

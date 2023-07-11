@@ -49,8 +49,12 @@ public class Book {
         this.genre = genre;
     }
 
-
-
+    public Book(Long id, String title, Author author, Genre genre) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
 
     @Override
     public String toString() {
