@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Airplane Engine Shop - Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./static/style.css" type="text/css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<header>
+    <h1>Airplane Engine Shop</h1>
+    <nav>
+        <ul>
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a onclick="getUserOrders()">My orders</a></li>
+            <li><a onclick="getEngines()">Catalog</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h2>Welcome to Airplane Engine Shop</h2>
+    <p>We are your one-stop-shop for all things airplane engines. Our catalog is filled with top-of-the-line engines from the world's leading manufacturers. Whether you're building a new plane or replacing an old engine, we have everything you need to get the job done.</p>
+    <p>So why wait? Browse our catalog today and find the perfect engine for your needs!</p>
+    <a onclick="getEngines()" class="btn btn-primary">Browse Our Catalog</a>
+</main>
+<footer>
+    <p>&copy; 2023 Airplane Engine Shop</p>
+</footer>
+<script type="text/javascript" th:src="@{/static/main.js}"></script>
+</body>
+</html>
